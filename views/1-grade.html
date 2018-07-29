@@ -1,0 +1,53 @@
+{% extends "base.html" %} {% block main %}
+<div class="col-xs-12", style="text-align: center">
+    <h2>Please decide to which extent you agree with the following statement:</h2>
+    <h3>A web page that loads at the speed shown in the video provides a satisfactory experience.</h3>
+    <div class="btn-group-vertical" data-toggle="buttons" id="Inputs">
+        <label class="btn btn-default"><input id="StronglyPositive" name="sentiment" required="" type="radio" value="Strongly Agree" />Strongly Agree
+        </label> 
+        <label class="btn btn-default"><input id="Positive" name="sentiment" required="" type="radio" value="Agree" />Agree
+        </label>
+        <label class="btn btn-default"><input id="Neutral" name="sentiment" required="" type="radio" value="Neither Agree nor Disagree" />Neither Agree nor Disagree
+        </label> 
+        <label class="btn btn-default"> <input id="Negative" name="sentiment" required="" type="radio" value="Disagree" />Disagree
+        </label> 
+        <label class="btn btn-default"> <input id="StronglyNegative" name="sentiment" required="" type="radio" value="Strongly Disagree" />Strongly Disagree
+        </label> 
+    </br>
+</br>
+    </div>
+</div>
+
+<!-- Close internal style sheet --><!-- External JS references -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script>
+        $(document).ready(function() {     
+            // highlight selected category
+            var inputs = $("#Inputs input:radio");
+            inputs.change(function(){
+              inputs.parent().removeClass("btn-success");
+              inputs.parent().addClass("btn-default");
+              if($(this).is(":checked")){
+                $(this).parent().removeClass("btn-default");
+                $(this).parent().addClass("btn-success");
+              }else{
+                $(this).parent().removeClass("btn-success");
+                $(this).parent().addClass("btn-default");
+              }
+            });
+            // end highlight
+          });
+</script>
+<div>
+    <form action="back2video", method="POST", style="text-align:center">
+        <button type="submit" class="btn btn-primary">Watch again</button>
+    </form>
+</div>
+</br>
+<div>
+<form action="next", method="POST", style="text-align:center">
+    <button type="submit" class="btn btn-primary">Next video</button>
+</form>
+</div>
+{% endblock %}
