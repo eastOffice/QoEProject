@@ -2,9 +2,9 @@
 <div class="container">
     <div class="row",style="margin-bottom: 30px">
         <div class="col-md-6 col-md-offset-3", style="text-align: center;">
-            <h1>Instructions for the test</h1>
+            <h2>Instructions for the test</h2>
                 <p>
-                    In this test, you will be asked to watch 13 videos.
+                    In this test, you will watch 13 videos.
                 </p>
                 <p> 
                     Each video will show you a process of browsing a website. 
@@ -12,7 +12,36 @@
                 <p>
                     After watching each video, your job is to grade your level of satisfaction according to the given question.
                 </p>
+        </div>
+        <div class="col-md-6 col-md-offset-3", style="text-align: center;">
         <form action="start", method="POST">
+            <h2>Please take the simple survey before the test.</h2>
+            <p>We use the results to look for trends in responses.</p>
+            <div class="form group">
+                <label>Your MTurk ID:</label>
+                <input name="MTurkID" type="text" class="form-control" id="MTurkID" placeholder="Enter MTurkID">
+            </div>
+            <div class="form-group">
+                <label for="device">The device you are using to take the test:</label>
+                <select name="device" class="form-control" id="device">
+                    <option>Desktop / Laptop</option>
+                    <option>Tablete PC</option>
+                    <option>Cellphone</option>
+                    <option>Other device</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="age">Your age group:</label>
+                <select name="age" class="form-control" id="age">
+                    <option >18 - 24</option>
+                    <option>25 - 31</option>
+                    <option>32 - 38</option>
+                    <option>39 - 45</option>
+                    <option>46 - 52</option>
+                    <option>53 - 59</option>
+                    <option>60 and above</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Start test</button>
         </form>
         </div>
