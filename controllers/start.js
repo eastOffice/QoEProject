@@ -1,7 +1,8 @@
 // start test:
 var getOder = require('../models/random')
-
+var fs = require('fs')
 var video_order = getOder(1,13);
+var survey = [];
 var result = [];
 var count = 1;
 
@@ -12,28 +13,24 @@ var post_start = async (ctx, next) => {
     var age = ctx.request.body.age;
     console.log(mturkID, device, age);
 
-    result.push(mturkID, device, age);
+    survey.push(mturkID, device, age);
 
-    var video_src = "../videos/" + video_order[0] + ".mp4";
-    console.log(video_src);
+    // var video_src = "../videos/" + video_order[0] + ".mp4";
+    //var video_src = "./videos/" + "xuefeng" + ".mp4";
+    var video_src = "https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4";
+    //console.log(video_src);
 
     ctx.render('video.html', {
         title: '1/13', video_src : video_src
     });
 }
 
-
-
-
-
 var post_grade= async (ctx, next) => {
     var title = count + "/13";
     ctx.render('grade.html', {
-        title: title
+        title: title, count: count
     });
 }
-
-
 
 
 var post_back2video = async (ctx, next) => {
@@ -59,8 +56,20 @@ var post_back2video = async (ctx, next) => {
         });
     }
     else {
+        console.log(result);
+        var filename = "./results/" + survey[0] + ".txt";
+        var write_data = [];
+        for(var i in video_order) {
+            write_data[video_order[i] - 1] = result[i];
+        }
+        fs.writeFile(filename, survey + '\n' + write_data , function(err) {
+            if(err) {
+                return console.log(err);
+            }
+        });
+        var return_code = "0lMq2GKqLDSUgYAGc=";
         ctx.render('ending.html', {
-            title: 'Thank you'
+            title: 'Thank you', return_code:return_code
         });
     }
 }
