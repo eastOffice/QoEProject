@@ -6,7 +6,7 @@ These are source codes for a web-based test on QoE of Internet.
 
 This is a localhost version.
 
-##Setup
+## Setup
 
 1. Install `node.js` from its [official website](https://nodejs.org/en/download/)
 
@@ -45,3 +45,9 @@ This is a localhost version.
 5. Visit `localhost:3000` on your website, you should see the instruction page.
 
    After finishing the test, the results will be stored in `./results/`, the file name will be the MTurk ID.
+
+## Problems
+
+1. Only one tester can proceed the test at the same time. This is because I used some variables to control the order of the webpages, videos, etc.
+   If another tester visits the webpage, he will be asked to wait first. One big problem is that if one tester quits before finishing, then the server will keep waiting.
+   I wonder if this problem can be solved by multi-process methods(each tester has a pid).

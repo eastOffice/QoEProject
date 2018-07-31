@@ -8,25 +8,32 @@ var count = 1;
 var video_url = "https://github.com/eastOffice/QoEProject/raw/master/videos/";
 
 var post_start = async (ctx, next) => {
-    var fs = require('fs');
-    var mturkID = ctx.request.body.MTurkID;
-    var device = ctx.request.body.device;
-    var age = ctx.request.body.age;
-    console.log(mturkID, device, age);
+    console.log(count);
+    if(count != 1) {
+        ctx.render('wait.html', {
+            title:'Please wait'
+        });
+    }
+    else {
+        var mturkID = ctx.request.body.MTurkID;
+        var device = ctx.request.body.device;
+        var age = ctx.request.body.age;
+        console.log(mturkID, device, age);
 
-    survey.push(mturkID, device, age);
+        survey.push(mturkID, device, age);
 
-    // var video_src = "../videos/" + video_order[0] + ".mp4";
-    //var video_src = "./videos/" + "xuefeng" + ".mp4";
-    video_order = getOder(1,13);
-    var video_src = video_url + video_order[0] + ".mp4";
-    // https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4
-    // very interesting url!
-    //console.log(video_src);
+        // var video_src = "../videos/" + video_order[0] + ".mp4";
+        //var video_src = "./videos/" + "xuefeng" + ".mp4";
+        video_order = getOder(1,13);
+        var video_src = video_url + video_order[0] + ".mp4";
+        // https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4
+        // very interesting url!
+        //console.log(video_src);
 
-    ctx.render('video.html', {
-        title: '1/13', video_src : video_src
-    });
+        ctx.render('video.html', {
+            title: '1/13', video_src : video_src
+        });
+    }
 }
 
 var post_grade= async (ctx, next) => {
