@@ -1,7 +1,7 @@
 // start test:
 var getOder = require('../models/random')
 var fs = require('fs')
-var video_order = getOder(1,13);
+var video_order =[];
 var survey = [];
 var result = [];
 var count = 1;
@@ -18,7 +18,7 @@ var post_start = async (ctx, next) => {
 
     // var video_src = "../videos/" + video_order[0] + ".mp4";
     //var video_src = "./videos/" + "xuefeng" + ".mp4";
-
+    video_order = getOder(1,13);
     var video_src = video_url + video_order[0] + ".mp4";
     // https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4
     // very interesting url!
@@ -71,6 +71,12 @@ var post_back2video = async (ctx, next) => {
                 return console.log(err);
             }
         });
+        // re initialize
+        count = 1;
+        result =[];
+        survey =[];
+        video_order =[];
+
         var return_code = "0lMq2GKqLDSUgYAGc=";
         ctx.render('ending.html', {
             title: 'Thank you', return_code:return_code
