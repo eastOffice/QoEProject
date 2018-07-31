@@ -5,6 +5,7 @@ var video_order = getOder(1,13);
 var survey = [];
 var result = [];
 var count = 1;
+var video_url = "https://github.com/eastOffice/QoEProject/raw/master/videos/";
 
 var post_start = async (ctx, next) => {
     var fs = require('fs');
@@ -17,7 +18,10 @@ var post_start = async (ctx, next) => {
 
     // var video_src = "../videos/" + video_order[0] + ".mp4";
     //var video_src = "./videos/" + "xuefeng" + ".mp4";
-    var video_src = "https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4";
+
+    var video_src = video_url + video_order[0] + ".mp4";
+    // https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4
+    // very interesting url!
     //console.log(video_src);
 
     ctx.render('video.html', {
@@ -35,7 +39,7 @@ var post_grade= async (ctx, next) => {
 
 var post_back2video = async (ctx, next) => {
     //var video_order = require('./start.js').video_order;
-    var video_src = "../videos/" + video_orde[count - 1] + ".mp4";
+    var video_src = video_url + video_order[count - 1] + ".mp4";
     var title = count +"/13";
     ctx.render('video.html', {
         title: title, video_src: video_src
@@ -47,7 +51,7 @@ var post_back2video = async (ctx, next) => {
     var grade = ctx.request.body.sentiment;
     result.push(grade);
     if(count < 13) {
-        var video_src = "../videos/" + video_order[count] + ".mp4";
+        var video_src = video_url + video_order[count - 1] + ".mp4";
         count = count + 1;
         var title = count +"/13";
 
