@@ -5,16 +5,24 @@ var video_order =[];
 var survey = [];
 var result = [];
 var count = 1;
+var timeoutObj;
 var video_url = "https://github.com/eastOffice/QoEProject/raw/master/videos/";
 
 var post_start = async (ctx, next) => {
     console.log(count);
     if(count != 1) {
+
         ctx.render('wait.html', {
             title:'Please wait'
         });
     }
     else {
+        timeoutObj = setTimeout(function() {
+            count = 1;
+            console.log('Time out, reset web page!');
+        }, 600000);
+        // may be set a timer here
+        // best sol is to use multi-process
         var mturkID = ctx.request.body.MTurkID;
         var device = ctx.request.body.device;
         var age = ctx.request.body.age;
@@ -58,7 +66,7 @@ var post_back2video = async (ctx, next) => {
     var grade = ctx.request.body.sentiment;
     result.push(grade);
     if(count < 13) {
-        var video_src = video_url + video_order[count - 1] + ".mp4";
+        var video_src = video_url + video_order[count] + ".mp4";
         count = count + 1;
         var title = count +"/13";
 
@@ -83,6 +91,7 @@ var post_back2video = async (ctx, next) => {
         result =[];
         survey =[];
         video_order =[];
+        clearTimeout(timeoutObj);
 
         var return_code = "0lMq2GKqLDSUgYAGc=";
         ctx.render('ending.html', {
