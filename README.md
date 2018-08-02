@@ -51,3 +51,10 @@ This is a localhost version.
 1. Only one tester can proceed the test at the same time. This is because I used some variables to control the order of the webpages, videos, etc.
    If another tester visits the webpage, he will be asked to wait first. One big problem is that if one tester quits before finishing, then the server will keep waiting.
    I wonder if this problem can be solved by multi-process methods(each tester has a pid).
+
+    An idea just came across my mind: can I use `ctx` to transfer these global variables? eg.
+    ```
+    ctx.video_order = video_order;
+    ctx.count = count;
+    ctx.result = result;
+    ```
