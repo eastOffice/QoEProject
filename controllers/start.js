@@ -1,97 +1,92 @@
 // start test:
 var getOder = require('../models/random')
 var fs = require('fs')
-var video_order =[];
-var survey = [];
-var result = [];
-var count = 1;
-var timeoutObj;
 var video_url = "https://github.com/eastOffice/QoEProject/raw/master/videos/";
 
+
 var post_start = async (ctx, next) => {
-    console.log(count);
-    if(count != 1) {
+    var mturkID = ctx.request.body.MTurkID;
+    var device = ctx.request.body.device;
+    var age = ctx.request.body.age;
+    var video_order = getOder(1,13);
+    console.log(mturkID, device, age);
+    var start = new Date().getTime();
 
-        ctx.render('wait.html', {
-            title:'Please wait'
-        });
-    }
-    else {
-        timeoutObj = setTimeout(function() {
-            count = 1;
-            console.log('Time out, reset web page!');
-        }, 600000);
-        // may be set a timer here
-        // best sol is to use multi-process
-        var mturkID = ctx.request.body.MTurkID;
-        var device = ctx.request.body.device;
-        var age = ctx.request.body.age;
-        console.log(mturkID, device, age);
+    let user = {
+        mturkID : mturkID,
+        device : device,
+        age : age,
+        video_order : video_order,
+        count : 1,
+        result : [],
+        time :[],
+        start: start 
+    };
+    let value =  Buffer.from(JSON.stringify(user)).toString('base64');
+    ctx.cookies.set('name', value);
+    var video_src = video_url + video_order[0] + ".mp4";
+    // https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4
+    // very interesting url!
 
-        survey.push(mturkID, device, age);
 
-        // var video_src = "../videos/" + video_order[0] + ".mp4";
-        //var video_src = "./videos/" + "xuefeng" + ".mp4";
-        video_order = getOder(1,13);
-        var video_src = video_url + video_order[0] + ".mp4";
-        // https://github.com/michaelliao/learn-javascript/raw/master/video/vscode-nodejs.mp4
-        // very interesting url!
-        //console.log(video_src);
-
-        ctx.render('video.html', {
-            title: '1/13', video_src : video_src
-        });
-    }
+    ctx.render('video.html', {
+        title: '1/13', video_src : video_src
+    });
 }
 
 var post_grade= async (ctx, next) => {
-    var title = count + "/13";
+    var user = ctx.state.user;
+    var title = user.count + "/13";
     ctx.render('grade.html', {
-        title: title, count: count
+        title: title, count: user.count
     });
 }
 
 
 var post_back2video = async (ctx, next) => {
-    //var video_order = require('./start.js').video_order;
-    var video_src = video_url + video_order[count - 1] + ".mp4";
-    var title = count +"/13";
+    var user = ctx.state.user;
+    var video_src = video_url + user.video_order[user.count - 1] + ".mp4";
+    var title = user.count +"/13";
     ctx.render('video.html', {
         title: title, video_src: video_src
     });
 }
  var post_next = async (ctx, next) => {
-    //var video_order = require('./start.js').video_order;
-    //var result = require('./start.js').result;
+    var user = ctx.state.user;
     var grade = ctx.request.body.sentiment;
-    result.push(grade);
-    if(count < 13) {
-        var video_src = video_url + video_order[count] + ".mp4";
-        count = count + 1;
-        var title = count +"/13";
+    user.result.push(grade);
+    var end = new Date().getTime();
+    var exe_time = end - user.start;
+    user.time.push(exe_time);
+    user.start = end;
+    if(user.count < 13) {
+        var video_src = video_url + user.video_order[user.count] + ".mp4";
+        user.count = user.count + 1;
+        var title = user.count +"/13";
 
+        // set new cookie
+        let value =  Buffer.from(JSON.stringify(user)).toString('base64');
+        ctx.cookies.set('name', value);
         ctx.render('video.html', {
             title: title, video_src: video_src
         });
     }
     else {
-        console.log(result);
-        var filename = "./results/" + survey[0] + ".txt";
+        console.log(user.result);
+        var filename = "./results/" + user.mturkID + ".txt";
         var write_data = [];
-        for(var i in video_order) {
-            write_data[video_order[i] - 1] = result[i];
+        var write_time = [];
+        for(var i in user.video_order) {
+            write_data[user.video_order[i] - 1] = user.result[i];
+            write_time[user.video_order[i] - 1] = user.time[i];
         }
-        fs.writeFile(filename, survey + '\n' + write_data , function(err) {
+        fs.writeFile(filename, write_data + '\n'+ write_time + '\n' + user.mturkID + '\n' + user.device + '\n' + user.age , function(err) {
             if(err) {
                 return console.log(err);
             }
         });
-        // re initialize
-        count = 1;
-        result =[];
-        survey =[];
-        video_order =[];
-        clearTimeout(timeoutObj);
+        // clear cookie
+        ctx.cookies.set('name','');
 
         var return_code = "0lMq2GKqLDSUgYAGc=";
         ctx.render('ending.html', {

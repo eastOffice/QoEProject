@@ -21,6 +21,12 @@ app.use(async (ctx, next) => {
     ctx.response.set('X-Response-Time', `${execTime}ms`);
 });
 
+// parse user from cookie:
+app.use(async (ctx, next) => {
+    ctx.state.user = parseUser(ctx.cookies.get('name') || '');
+    await next();
+});
+
 // static file support:
 if (! isProduction) {
     let staticFiles = require('./static-files');
@@ -41,3 +47,26 @@ app.use(controller());
 
 app.listen(3000);
 console.log('app started at port 3000...');
+
+function parseUser(obj) {
+    if (!obj) {
+        return;
+    }
+    //console.log('try parse: ' + obj);
+    let s = '';
+    if (typeof obj === 'string') {
+        s = obj;
+    } else if (obj.headers) {
+        let cookies = new Cookies(obj, null);
+        s = cookies.get('name');
+    }
+    if (s) {
+        try {
+            let user = JSON.parse(Buffer.from(s, 'base64').toString());
+            //console.log(`User: ${user.mturkID}, ID: ${user.video_order}`);
+            return user;
+        } catch (e) {
+            // ignore
+        }
+    }
+}
