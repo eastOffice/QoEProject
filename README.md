@@ -58,3 +58,16 @@ This is a localhost version.
     ctx.count = count;
     ctx.result = result;
     ```
+    This problem is fixed: the idea is using cookie, bind all the global variables to the cookie by using:
+    ```
+    ctx.cookies.set('name');
+    ctx.cookies.get('name');
+    ```
+    Also need to add
+    ```
+    app.use(async (ctx, next) => {
+    ctx.state.user = parseUser(ctx.cookies.get('name') || '');
+    await next();
+    });
+    ```
+    in `app.js` . 
