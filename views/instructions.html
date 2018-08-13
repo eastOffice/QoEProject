@@ -18,21 +18,25 @@
             <h2>Please take the simple survey before the test.</h2>
             <p>We use the results to look for trends in responses.</p>
             <div class="form group">
-                <label>Your MTurk ID:</label>
+                <label>Your MTurk Worker ID:(you can find this on your Dashboard or in the upper left corner of the
+                    <a href="https://worker.mturk.com" target="_blank">new Worker website</a>)</label>
                 <input name="MTurkID" type="text" class="form-control" id="MTurkID" placeholder="Enter MTurkID">
             </div>
             <div class="form-group">
-                <label for="device">The device you are using to take the test:</label>
+                <label for="device">Device you use most for web browsing:</label>
                 <select name="device" class="form-control" id="device">
-                    <option>Desktop / Laptop</option>
-                    <option>Tablete PC</option>
-                    <option>Cellphone</option>
+                    <option value="_null" disabled selected></option> 
+                    <option>Desktop</option>
+                    <option>Laptop</option>
+                    <option>Tablet</option>
+                    <option>Smart phone</option>
                     <option>Other device</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="age">Your age group:</label>
                 <select name="age" class="form-control" id="age">
+                    <option value="_null" disabled selected></option> 
                     <option >18 - 24</option>
                     <option>25 - 31</option>
                     <option>32 - 38</option>
@@ -42,12 +46,40 @@
                     <option>60 and above</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Start test</button>
+            <div class="form-group">
+                <label for="network">Nework you use most for web browsing:</label>
+                <select name="network" class="form-control" id="network">
+                    <option value="_null" disabled selected></option> 
+                    <option >WiFI</option>
+                    <option>Cable network</option>
+                    <option>Cellular network</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="return checkform()">Start test</button>
         </form>
         </div>
     </div>
 </div>
 
+
+<script>
+    function checkform(){
+        var flag = true;
+        //alert($('[name=device]').val());
+        if($('[name=MTurkID]').val() == "") {
+            flag = false;
+            alert("Please input your MTurk worker ID.");
+        }
+        else if($('[name=device]').val() == null ||
+                $('[name=age]').val() == null ||
+                $('[name=network]').val() == null) {
+            flag = false;
+            alert("Please complete the form.")
+        }
+        return flag;
+    }
+</script>
 
 
 {% endblock %}

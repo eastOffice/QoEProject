@@ -8,6 +8,7 @@ var post_start = async (ctx, next) => {
     var mturkID = ctx.request.body.MTurkID;
     var device = ctx.request.body.device;
     var age = ctx.request.body.age;
+    var network = ctx.request.body.network;
     var video_order = getOder(1,13);
     console.log(mturkID, device, age);
     var start = new Date().getTime();
@@ -16,10 +17,12 @@ var post_start = async (ctx, next) => {
         mturkID : mturkID,
         device : device,
         age : age,
+        network : network,
         video_order : video_order,
         count : 1,
         result : [],
-        time :[],
+        video_time :[],
+        grade_time:[],
         start: start 
     };
     let value =  Buffer.from(JSON.stringify(user)).toString('base64');
@@ -36,6 +39,14 @@ var post_start = async (ctx, next) => {
 
 var post_grade= async (ctx, next) => {
     var user = ctx.state.user;
+    var end = new Date().getTime();
+    var exe_time = end - user.start;
+    user.video_time.push(exe_time);
+    user.start = end;
+
+    let value =  Buffer.from(JSON.stringify(user)).toString('base64');
+    ctx.cookies.set('name', value);
+
     var title = user.count + "/13";
     ctx.render('grade.html', {
         title: title, count: user.count
@@ -57,7 +68,7 @@ var post_back2video = async (ctx, next) => {
     user.result.push(grade);
     var end = new Date().getTime();
     var exe_time = end - user.start;
-    user.time.push(exe_time);
+    user.grade_time.push(exe_time);
     user.start = end;
     if(user.count < 13) {
         var video_src = video_url + user.video_order[user.count] + ".mp4";
@@ -75,12 +86,17 @@ var post_back2video = async (ctx, next) => {
         console.log(user.result);
         var filename = "./results/" + user.mturkID + ".txt";
         var write_data = [];
-        var write_time = [];
+        var write_video_time = [], write_grade_time =[];
         for(var i in user.video_order) {
             write_data[user.video_order[i] - 1] = user.result[i];
-            write_time[user.video_order[i] - 1] = user.time[i];
+            write_video_time[user.video_order[i] - 1] = user.video_time[i];
+            write_grade_time[user.video_order[i] - 1] = user.grade_time[i];
         }
-        fs.writeFile(filename, write_data + '\n'+ write_time + '\n' + user.mturkID + '\n' + user.device + '\n' + user.age , function(err) {
+        fs.writeFile(filename, write_data + '\n'+ user.video_order + '\n' + 
+                    write_video_time + '\n'
+                     + write_grade_time + '\n' + user.mturkID + '\n' 
+                     + user.device + '\n' + user.age + '\n' 
+                     + user.network , function(err) {
             if(err) {
                 return console.log(err);
             }
