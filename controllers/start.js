@@ -1,7 +1,7 @@
 // start test:
 var getOder = require('../models/random')
 var fs = require('fs')
-var video_url = "https://github.com/eastOffice/QoEProject/raw/master/videos/";
+var video_url = "https://github.com/eastOffice/QoEProject/raw/master/videos/amazon/";
 
 
 var post_start = async (ctx, next) => {

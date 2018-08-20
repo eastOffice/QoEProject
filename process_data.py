@@ -23,7 +23,7 @@ def check_length(l, name):
 
 def process_user(f):
     grade_str = f.readline().strip('\n').split(",")
-    #video_order_str = f.readline().strip('\n').split(",")
+    video_order_str = f.readline().strip('\n').split(",")
     video_time_str = f.readline().strip('\n').split(",")
     decide_time_str = f.readline().strip('\n').split(",")
     mturkID = f.readline().strip('\n')
@@ -41,7 +41,7 @@ def process_user(f):
     decide_time=[]
     for i in range(len(grade_str)):
         grade.append(int(grade_str[i]))
-        #video_order.append(int(video_order_str[i]))
+        video_order.append(int(video_order_str[i]))
         video_time.append(int(video_time_str[i]))
         decide_time.append(int(decide_time_str[i]))
     result=[grade, video_order, video_time, decide_time, mturkID, device, age, network]
@@ -52,7 +52,7 @@ def process_user(f):
 fileroot = './results'
 results=[]
 list = os.listdir(fileroot)
-print(len(list) ," files detected.")
+print len(list) ," files detected."
 for i in range(0, len(list)):
     path = os.path.join(fileroot, list[i])
     if os.path.isfile(path):
@@ -68,8 +68,22 @@ def gather_data():
     print(np.shape(data))
     return data
 
+def save_order():
+    order_list = []
+    for i in range(len(results)):
+        order_list.append(results[i][1])
+    order = np.array(order_list)
+    print np.shape(order)
+    np.save("order004.npy", order)
+    return
+
+
 data =gather_data()
+data[:,[8,9]] = data[:,[9,8]]
+save_order()
+np.save("004.npy", data)
 data_mean = np.mean(data, axis=0)
+
 print(data_mean)
 
 x_list =[0, 50, 100, 200, 300, 500, 750, 1000, 1250, 1500, 2000, 3000, 5000]
