@@ -61,7 +61,22 @@ x_list_user_percieved = [2.16,
 35.8
 ]
 
-x = np.array(x_list)
+x_list_user_no_adds_amazon = [1.34,
+1.56,
+2.38,
+3.56,
+4.08,
+4.26,
+5.16,
+6.4,
+9,
+9.96,
+12.86,
+20.52,
+30.52
+]
+
+x = np.array(x_list_user_no_adds_amazon)
 
 plt.figure()
 plt.style.use('ggplot')
