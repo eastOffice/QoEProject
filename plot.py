@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import t
 
+'''
 data001 = np.load("001.npy")
 data002 = np.load("002.npy")
 data003 = np.load("003.npy")
@@ -10,6 +11,9 @@ data004 = np.load("004.npy")
 print data004
 
 combine = np.row_stack((data001, data002, data003, data004))
+'''
+combine = np.load("youtube.npy")
+print combine
 n = np.shape(combine)[0]
 print np.shape(combine)
 
@@ -28,38 +32,6 @@ alpha = 1.0 - 0.95
 conf_interval = t.ppf(1-alpha/2., dof) * y_std * np.sqrt(1.+1./n)
 '''
 
-# x_list =[0, 50, 100, 200, 300, 500, 750, 1000, 1250, 1500, 2000, 3000, 5000]
-
-x_list = [2.6,
-2.76,
-3.48,
-5.12,
-6.28,
-7.96,
-12.64,
-17.84,
-20.6,
-22.52,
-28,
-40.32,
-65.76
-]
-
-
-x_list_user_percieved = [2.16,
-2.52,
-3.44,
-4.84,
-5.4,
-5.56,
-6,
-7.92,
-11.44,
-11.84,
-14.84,
-21.76,
-35.8
-]
 
 x_list_user_no_adds_amazon = [1.34,
 1.56,
@@ -76,7 +48,35 @@ x_list_user_no_adds_amazon = [1.34,
 30.52
 ]
 
-x = np.array(x_list_user_no_adds_amazon)
+x_list_google =[0.72,
+1.52,
+2.8,
+3.84,
+4.32,
+6.32,
+8.26,
+10.48,
+12.84,
+15.88,
+20.12,
+24.04
+]
+
+x_list_youtube =[1.16,
+1.56,
+2.12,
+3.52,
+4.16,
+4.88,
+6.92,
+7.4,
+8.28,
+13,
+20.64,
+28.8
+]
+
+x = np.array(x_list_youtube)
 
 plt.figure()
 plt.style.use('ggplot')
