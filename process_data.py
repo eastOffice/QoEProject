@@ -14,7 +14,7 @@ def f_exp(x,A,B,C,D):
 
 def check_length(l, name):
     flag = 0
-    while(len(l) < 12):
+    while(len(l) < 11):
         l.append(777)
         flag = 1
     if(flag):
@@ -74,7 +74,7 @@ def save_order():
         order_list.append(results[i][1])
     order = np.array(order_list)
     print np.shape(order)
-    np.save("youtube_order.npy", order)
+    np.save("cnn_order.npy", order)
     return order
 
 def look_at_time(order):
@@ -96,7 +96,7 @@ def look_at_time(order):
 data =gather_data()
 # data[:,[8,9]] = data[:,[9,8]]
 order = save_order()
-np.save("youtube.npy", data)
+np.save("cnn.npy", data)
 data_mean = np.mean(data, axis=0)
 
 # unordered, time = look_at_time(order)

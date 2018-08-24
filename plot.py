@@ -12,7 +12,7 @@ print data004
 
 combine = np.row_stack((data001, data002, data003, data004))
 '''
-combine = np.load("youtube.npy")
+combine = np.load("cnn.npy")
 print combine
 n = np.shape(combine)[0]
 print np.shape(combine)
@@ -76,7 +76,20 @@ x_list_youtube =[1.16,
 28.8
 ]
 
-x = np.array(x_list_youtube)
+x_list_cnn = [1.4,
+1.56,
+3.76,
+4.84,
+5.36,
+7.8,
+9.2,
+13.92,
+17.64,
+21.16,
+35.72
+]
+
+x = np.array(x_list_cnn)
 
 plt.figure()
 plt.style.use('ggplot')
