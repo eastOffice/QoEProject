@@ -41,9 +41,9 @@ def process_user(f):
     decide_time=[]
     for i in range(len(grade_str)):
         grade.append(int(grade_str[i]))
-        video_order.append(int(video_order_str[i]))
-        video_time.append(int(video_time_str[i]))
-        decide_time.append(int(decide_time_str[i]))
+        #video_order.append(int(video_order_str[i]))
+        #video_time.append(int(video_time_str[i]))
+        #decide_time.append(int(decide_time_str[i]))
     result=[grade, video_order, video_time, decide_time, mturkID, device, age, network]
     return result
 
