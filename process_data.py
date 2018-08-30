@@ -14,7 +14,7 @@ def f_exp(x,A,B,C,D):
 
 def check_length(l, name):
     flag = 0
-    while(len(l) < 11):
+    while(len(l) < 13):
         l.append(777)
         flag = 1
     if(flag):
@@ -41,9 +41,9 @@ def process_user(f):
     decide_time=[]
     for i in range(len(grade_str)):
         grade.append(int(grade_str[i]))
-        #video_order.append(int(video_order_str[i]))
-        #video_time.append(int(video_time_str[i]))
-        #decide_time.append(int(decide_time_str[i]))
+        video_order.append(int(video_order_str[i]))
+        video_time.append(int(video_time_str[i]))
+        decide_time.append(int(decide_time_str[i]))
     result=[grade, video_order, video_time, decide_time, mturkID, device, age, network]
     return result
 
@@ -74,7 +74,7 @@ def save_order():
         order_list.append(results[i][1])
     order = np.array(order_list)
     print np.shape(order)
-    np.save("cnn_order.npy", order)
+    np.save("youtube_order_new.npy", order)
     return order
 
 def look_at_time(order):
@@ -96,7 +96,7 @@ def look_at_time(order):
 data =gather_data()
 # data[:,[8,9]] = data[:,[9,8]]
 order = save_order()
-np.save("cnn.npy", data)
+np.save("youtube_new.npy", data)
 data_mean = np.mean(data, axis=0)
 
 # unordered, time = look_at_time(order)

@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import t
 
-'''
+
 data001 = np.load("001.npy")
 data002 = np.load("002.npy")
 data003 = np.load("003.npy")
@@ -11,9 +11,9 @@ data004 = np.load("004.npy")
 # print data004
 
 combine = np.row_stack((data001, data002, data003, data004))
-'''
-combine = np.load("google.npy")
-print combine
+
+# combine = np.load("google.npy")
+# print combine
 n = np.shape(combine)[0]
 print np.shape(combine)
 
@@ -42,7 +42,7 @@ x_list_amazon = [
 4.26,
 5.16,
 6.4,
-9,
+8,
 9.96,
 12.86,
 20.52,
@@ -95,6 +95,10 @@ x_list_cnn = [0.52,
 ]
 
 x = np.array(x_list_amazon)
+
+x = np.delete(x, 4)
+y_mean = np.delete(y_mean, 4)
+y_se = np.delete(y_se, 4)
 
 plt.figure()
 plt.style.use('ggplot')
