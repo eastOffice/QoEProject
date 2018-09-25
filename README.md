@@ -77,10 +77,10 @@ This is a localhost version.
 1. The raw data collected from the website are .txt files, containing info about grades, order of videos, watching and decision time of each grade, and the content of the survey. I will up load them to `./raw_data/`, you can load these data into npy files with `process_data.py`, which has already been done and the npy files are in `./data` folder, so you may not need to deal with raw data. I have rejected unqualified results on MTurk, so all the results in the npy file are valid.
 
 2. In the `./data` folder, you can see all the npy files and plotting codes. Sorry for the confusing names of the npy files:
-    -- amazon: 001, 002, 003, 004
-    -- cnn: cnn, cnn_new
-    -- google: google, google_new
-    -- youtube: youtube, youtube_new
+    - amazon: 001, 002, 003, 004
+    - cnn: cnn, cnn_new
+    - google: google, google_new
+    - youtube: youtube, youtube_new
 
 3. To plot a single curve for a website, eg. amazon, just run `plot_amazon.py`. To plot all the curves combined in one picture, run `plot_combine.py`. `plot_diff.py` plots the differential of the curves on every 2 points(you can modify to every 1 point). All the plotted results are in the `./figs` folder.
 
