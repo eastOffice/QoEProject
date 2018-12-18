@@ -3,7 +3,7 @@ import os
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import optimize
+# from scipy import optimize
 
 
 def f_log(x,A,B,C):
@@ -14,11 +14,11 @@ def f_exp(x,A,B,C,D):
 
 def check_length(l, name):
     flag = 0
-    while(len(l) < 13):
+    while(len(l) < 14):
         l.append(777)
         flag = 1
     if(flag):
-        print("Warning: id- ", name, "has less than 13 samples.")
+        print("Warning: id- ", name, "has less than 14 samples.")
     return
 
 def process_user(f):
@@ -74,7 +74,7 @@ def save_order():
         order_list.append(results[i][1])
     order = np.array(order_list)
     print np.shape(order)
-    np.save("youtube_order_new.npy", order)
+    np.save("ms_order.npy", order)
     return order
 
 def look_at_time(order):
@@ -95,31 +95,31 @@ def look_at_time(order):
 
 data =gather_data()
 # data[:,[8,9]] = data[:,[9,8]]
-order = save_order()
-np.save("youtube_new.npy", data)
-data_mean = np.mean(data, axis=0)
+# order = save_order()
+np.save("./data/ms.npy", data)
+# data_mean = np.mean(data, axis=0)
 
-# unordered, time = look_at_time(order)
-
-
-# print(data_mean)
+# # unordered, time = look_at_time(order)
 
 
-
-x_list =[0, 50, 100, 200, 300, 500, 750, 1000, 1250, 1500, 2000, 3000]
-x = np.array(x_list)
-x1 = x
-x2 = x
-A1, B1, C1 = optimize.curve_fit(f_log, x1, data_mean)[0]
-#A2, B2, C2, D2 =optimize.curve_fit(f_exp, x2, data_mean)[0]
-
-data_log = f_log(x1, A1, B1, C1)
-#data_exp = f_exp(x2, 1.699, -0.002706, 3.259, -0.0003815)
+# # print(data_mean)
 
 
 
-plt.figure()
-plt.scatter(x[:], data_mean[:], 15,"red")
-plt.plot(x1, data_log, "blue")
-#plt.plot(x2, data_exp, "green")
-plt.show()
+# x_list =[0, 50, 100, 200, 300, 500, 750, 1000, 1250, 1500, 2000, 3000]
+# x = np.array(x_list)
+# x1 = x
+# x2 = x
+# A1, B1, C1 = optimize.curve_fit(f_log, x1, data_mean)[0]
+# #A2, B2, C2, D2 =optimize.curve_fit(f_exp, x2, data_mean)[0]
+
+# data_log = f_log(x1, A1, B1, C1)
+# #data_exp = f_exp(x2, 1.699, -0.002706, 3.259, -0.0003815)
+
+
+
+# plt.figure()
+# plt.scatter(x[:], data_mean[:], 15,"red")
+# plt.plot(x1, data_log, "blue")
+# #plt.plot(x2, data_exp, "green")
+# plt.show()

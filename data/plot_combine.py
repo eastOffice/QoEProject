@@ -193,6 +193,31 @@ def plot_cnn():
     x = np.array(x_list_cnn)
     return x, y_mean
 
+def plot_ms():
+    x_list_ms =[0.56,
+    1.12,
+    1.72,
+    2.22,
+    3.48,
+    4.32,
+    5.04,
+    6.72,
+    8.04,
+    10.64,
+    12.72,
+    16.56,
+    20.52,
+    25.46
+    ]
+
+    google = np.load('ms.npy')
+    print "google shape: ", google.shape
+
+    y_mean = np.mean(google, axis=0)
+
+    x = np.array(x_list_ms)
+    return x, y_mean
+
 
 x_amazon, y_amazon = plot_amazon()
 np.save("amazon_x.npy", x_amazon)
@@ -200,6 +225,7 @@ np.save("y_amazon.npy", y_amazon)
 x_google, y_google = plot_google()
 x_youtube, y_youtube = plot_youtube()
 x_cnn, y_cnn = plot_cnn()
+x_ms, y_ms = plot_ms()
 
 plt.figure()
 plt.style.use('ggplot')
@@ -209,7 +235,8 @@ plt.plot(x_amazon, y_amazon,"blue")
 plt.plot(x_google, y_google, "green")
 plt.plot(x_youtube, y_youtube, "red")
 plt.plot(x_cnn, y_cnn, "black")
-plt.legend(['amazon', 'google', 'youtube', 'cnn'],
+plt.plot(x_ms, y_ms, "yellow")
+plt.legend(['amazon', 'google', 'youtube', 'cnn', 'microsoft'],
            loc='upper right',
            numpoints=1,
            fancybox=True)
